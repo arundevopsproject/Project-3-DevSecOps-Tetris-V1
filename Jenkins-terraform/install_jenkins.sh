@@ -1,14 +1,19 @@
 #!/bin/bash
+
+#install java
 sudo apt update -y
 wget -O - https://packages.adoptium.net/artifactory/api/gpg/key/public | tee /etc/apt/keyrings/adoptium.asc
 echo "deb [signed-by=/etc/apt/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list
 sudo apt update -y
 sudo apt install temurin-17-jdk -y
 /usr/bin/java --version
+
+#install jenkins
 curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
 echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt-get update -y
 sudo apt-get install jenkins -y
+sudo systemctl enable jenkins
 sudo systemctl start jenkins
 sudo systemctl status jenkins
 
@@ -26,6 +31,7 @@ wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dear
 echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
 sudo apt-get update
 sudo apt-get install trivy -y
+sudo trivy --version
 
 #install terraform
 sudo apt install wget -y
@@ -46,3 +52,22 @@ sudo apt-get install unzip -y
 unzip awscliv2.zip
 sudo ./aws/install
 
+
+#check the version of all installed tools
+echo "------------------------------------"
+echo " Checking Installed Tools Versions "
+echo "------------------------------------"
+echo -n "Java: "
+sudo java -version 2>&1 | head -n 1
+echo -n "Jenkins: "
+sudo jenkins --version
+echo -n "Docker: "
+sudo docker --version
+echo -n "Trivy: "
+sudo trivy --version
+echo -n "Terraform: "
+sudo terraform version | head -n 1
+echo -n "Kubectl: "
+sudo kubectl version --client --short
+echo -n "AWS CLI: "
+sudo aws --version

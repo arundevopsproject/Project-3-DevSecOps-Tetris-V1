@@ -112,3 +112,6 @@ dist
 
 #Mac
 .DS_Store
+
+#Ignote terraform files
+**/.terraform*
