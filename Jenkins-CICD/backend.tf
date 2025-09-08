@@ -18,4 +18,4 @@ terraform {
 #     region         = var.aws_region
 #     dynamodb_table = var.dynamodb_table
 #   }
-}
+#}
