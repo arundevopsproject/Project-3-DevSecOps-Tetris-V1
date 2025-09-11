@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail   # Exit on error, unset variable, or pipe failure
+trap 'echo "❌ Error occurred at line $LINENO. Exiting..."; exit 1' ERR
 
 #install java
 sudo apt update -y
