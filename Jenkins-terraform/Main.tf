@@ -1,5 +1,5 @@
 resource "aws_iam_role" "example_role" {
-  name = "Jenkins-terraform"
+  name               = "Jenkins-terraform"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -60,7 +60,7 @@ resource "aws_security_group" "Jenkins-sg" {
 
 resource "aws_instance" "web" {
   ami                    = "ami-07f07a6e1060cd2a8"
-  instance_type          = "t3.medium"
+  instance_type          = "t3.large"
   key_name               = "keypair-project-3"
   vpc_security_group_ids = [aws_security_group.Jenkins-sg.id]
   user_data              = templatefile("./install_jenkins.sh", {})
