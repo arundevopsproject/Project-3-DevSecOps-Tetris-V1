@@ -1,4 +1,4 @@
-# React Tetris V1 final Codes
+# React Tetris V1
 
 Tetris game built with React
 
